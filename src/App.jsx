@@ -1,16 +1,29 @@
-import { useState } from 'react'
-import Home from './Pages/Home'
+import {Home} from './Pages/Home'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Login } from './Pages/Login'
+import { Signup } from './Pages/Signup'
+import { NavigationBar } from './Components/NavigationBar'
+import {CalendarSchedule} from './Components/Calendar'
+import { AdminDashboard } from './Pages/AdminDashboard'
+import "./App.css"
 
 
 function App() {
   
   return (
     <>
-      <div className="home">
-        <p>Hello React, I'm back</p>
+      <Router>
+        <NavigationBar/>
 
-        <Home/>
-      </div>
+        <Routes>
+          <Route path="/home" element={<Home/>} />
+          <Route path="/schedule" element={<CalendarSchedule height={500}/>} />
+          <Route path="/admin" element={<AdminDashboard/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Signup />} />
+
+        </Routes>
+      </Router>
     </>
   )
 }
