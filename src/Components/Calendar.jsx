@@ -1,49 +1,71 @@
-import React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-
-const events = [
-  {
-    id: 0,
-    title: 'Event 1',
-    start: moment("2024-09-21T15:22:30").toDate(),   // September 11, 2024, 2:00 PM
-    end: moment("2024-09-21T15:23:30").toDate(),     // September 11, 2024, 4:00 PM
-  },
-  {
-    id: 1,
-    title: 'Event 2',
-    start: moment("2024-09-20T15:21:30").toDate(),   // September 11, 2024, 2:00 PM
-    end: moment("2024-09-20T16:00:00").toDate(),     // September 11, 2024, 4:00 PM
-  },
-  {
-    id: 3,
-    title: 'Event 3',
-    start: moment("2024-09-20T15:00:00").toDate(),   // September 11, 2024, 2:00 PM
-    end: moment("2024-09-20T15:21:00").toDate(),     // September 11, 2024, 4:00 PM
-  },
-]; 
+import React, { useEffect, useState } from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import axios from "axios";
 
 const localizer = momentLocalizer(moment);
 
-export const CalendarSchedule= ({height}) =>{
+export const CalendarSchedule = ({ height }) => {
+  const [events, setEvents] = useState([]);
 
   //fetch events from backend
-  
+
+  useEffect(() => {
+    console.log("Exexutes only once");
+
+    axios
+      .get("http://localhost:4545/sessions/pawankumarshedage@gmail.com")
+      .then((response) => {
+        console.log("Events data: ", response.data);
+
+        // Assuming the backend returns events in the correct format
+        const backendEvents = response.data.map((event) => ({
+          ...event,
+          title: event.title,
+          eventType: event.sessionType,
+          start: new Date(event.start), // Convert to Date object
+          end: new Date(event.end),
+        }));
+        setEvents(backendEvents); // Store fetched events in state
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+      });
+  }, []);
+
+  // Event display
+  const EventComponent = ({ event }) => {
+    return (
+      <span>
+        <strong>{event.title}</strong>
+        <p>{event.eventType}</p>
+        <small>{event.description}</small>
+      </span>
+    );
+  };
+
+  const handleSelectEvent = (event)=>{
+    console.log("Selected event",event);
+  }
+
+  // -------------------------------------------------------------------------------------
   return (
     <div className="p-6 ">
       <h2 className="text-2xl mx-auto w-10/12  mb-4">Schedule a Session</h2>
 
-      
       <Calendar
-        className="w-10/12  mx-auto" 
+        className="w-10/12  mx-auto"
+        components={{
+          event: EventComponent,
+        }}
+        onSelectEvent={handleSelectEvent}
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
-        style={{ height: height}}
+        style={{ height: height }}
       />
     </div>
   );
-}
-
+};

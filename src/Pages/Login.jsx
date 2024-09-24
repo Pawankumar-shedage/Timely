@@ -4,6 +4,7 @@ import { NavigationBar } from '../Components/NavigationBar'
 export const Login = () => {
   return (
     <div>
+      <p>Welcome to login page.</p>
     </div>
   )
 }
