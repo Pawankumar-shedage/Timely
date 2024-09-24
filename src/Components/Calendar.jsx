@@ -3,14 +3,16 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import axios from "axios";
+import { EventDetailsModal } from "../Modals/EventDetailsModal";
 
 const localizer = momentLocalizer(moment);
 
 export const CalendarSchedule = ({ height }) => {
   const [events, setEvents] = useState([]);
+  const [selectedEvent,setSelectedEvent] = useState(null);
+  const [isModalOpen,setIsModalOpen] = useState(false);
 
   //fetch events from backend
-
   useEffect(() => {
     console.log("Exexutes only once");
 
@@ -47,6 +49,10 @@ export const CalendarSchedule = ({ height }) => {
 
   const handleSelectEvent = (event)=>{
     console.log("Selected event",event);
+    setSelectedEvent(event);
+    setIsModalOpen(true);
+
+    console.log("Modal Open ",isModalOpen);
   }
 
   // -------------------------------------------------------------------------------------
@@ -66,6 +72,14 @@ export const CalendarSchedule = ({ height }) => {
         endAccessor="end"
         style={{ height: height }}
       />
+
+      {/* Selected Event Modal */}
+      {selectedEvent && (
+        <EventDetailsModal 
+        isOpen={isModalOpen}
+        onClose={()=>setIsModalOpen(false)} 
+        event={selectedEvent}/>
+      )}
     </div>
   );
 };
