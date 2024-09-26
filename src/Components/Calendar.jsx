@@ -66,8 +66,8 @@ export const CalendarSchedule = ({ height }) => {
           event: EventComponent,
         }}
         onSelectEvent={handleSelectEvent}
-        localizer={localizer}
         events={events}
+        localizer={localizer}
         startAccessor="start"
         endAccessor="end"
         style={{ height: height }}

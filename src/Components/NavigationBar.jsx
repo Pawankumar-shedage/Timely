@@ -10,8 +10,7 @@ export const NavigationBar = () => {
   }
 
   return (
-    <div>
-      <nav className="bg-gray-100 border-gray-200 dark:bg-gray-900">
+      <nav className="bg-gray-100 w-full mx-auto border-gray-200 dark:bg-gray-900">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a href="" className="flex items-center space-x-3 rtl:space-x-reverse">
             <img
@@ -19,7 +18,7 @@ export const NavigationBar = () => {
               className="h-8"
               alt="Flowbite Logo"
             />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="sm:invisible md:visible self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Timely
             </span>
           </a>
@@ -54,7 +53,7 @@ export const NavigationBar = () => {
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link to={"/"}
-                  className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  className="block py-2 px-3 text-gray-900 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                   aria-current="page"
                 >
                  <span>Home</span>
@@ -74,7 +73,7 @@ export const NavigationBar = () => {
                  <span>Admin Dashboard</span>
                 </Link>
               </li>
-              <li>
+              <li className="sm:flex sm:flex-col sm:justify-start sm:px-2 md:flex md:flex-row md:justify-center">
                 <div>
                   <button
                     type="button"
@@ -82,18 +81,19 @@ export const NavigationBar = () => {
                   >
                     <Link to={"/login"}>Login</Link>
                   </button>
-                  <button
-                    type="button"
-                    className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                  >
-                    <Link to={"/register"}>Sign up</Link>
-                  </button>
                 </div>
+                  <div>
+                    <button
+                      type="button"
+                      className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    >
+                      <Link to={"/register"}>Sign up</Link>
+                    </button>
+                  </div>
               </li>
             </ul>
           </div>
         </div>
       </nav>
-    </div>
   );
 };

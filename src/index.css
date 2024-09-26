@@ -4,4 +4,6 @@
 
 body {
     @apply font-sans; /* or font-serif or font-mono depending on your preference */
+    width: 100vw;
+    height: 100vh;
   }
