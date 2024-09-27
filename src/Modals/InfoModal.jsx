@@ -1,17 +1,6 @@
-import { Button, Modal } from "flowbite-react";
-import React from "react";
+import React from 'react'
 
-export const EventDetailsModal = ({ isOpen, onClose, event }) => {
-  if (!isOpen) return null;
-  console.log("Event Details Modal", event);
-
-  const { title, start, end, duration, attendees, eventType } = event;
-
-  const handleSendEmail = (email) => {
-    console.log("Email", email);
-    window.open(`mailto:${email}`, "_blank");
-  };
-  // ---------------------------------------------------------------------
+export const InfoModal = ({title}) => {
   return (
     <div
       id="default-modal"
@@ -52,39 +41,7 @@ export const EventDetailsModal = ({ isOpen, onClose, event }) => {
           </div>
           {/* <!-- Modal body --> */}
           <div className="p-4 md:p-5 space-y-4">
-          <div className="space-y-4">
-            <p>
-              <strong>Event Type:</strong> {eventType}
-            </p>
-            <p>
-              <strong>Start:</strong> {new Date(start).toLocaleString()}
-            </p>
-            <p>
-              <strong>End:</strong> {new Date(end).toLocaleString()}
-            </p>
-            <p>
-              <strong>Duration:</strong> {duration} minutes
-            </p>
-            <p>
-              <strong>Attendees:</strong>{" "}
-            </p>
-            <ul>
-              {attendees.map((attendee, index) => (
-                <li key={index}>
-                  <div className="flex justify-space-between">
-                    <div>{attendee.name}</div>
-                    {/* TODO: Send email */}
-                    <button
-                    //  onClick={handleSendEmail(attendee.email)}
-                      className="text-white mx-5 px-2 rounded bg-gray-500"
-                    >
-                      Email
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+
           </div>
           {/* <!-- Modal footer --> */}
           <div className="flex justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
@@ -101,5 +58,5 @@ export const EventDetailsModal = ({ isOpen, onClose, event }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

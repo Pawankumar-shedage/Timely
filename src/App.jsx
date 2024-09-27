@@ -16,7 +16,7 @@ function App() {
       <NavigationBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/schedule" element={<CalendarSchedule height={500} />} />
+          <Route path="/events" element={<CalendarSchedule height={500} />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />

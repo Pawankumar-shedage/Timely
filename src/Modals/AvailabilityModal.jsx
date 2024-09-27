@@ -1,17 +1,12 @@
-import { Button, Modal } from "flowbite-react";
 import React from "react";
 
-export const EventDetailsModal = ({ isOpen, onClose, event }) => {
-  if (!isOpen) return null;
-  console.log("Event Details Modal", event);
 
-  const { title, start, end, duration, attendees, eventType } = event;
+export const AvailabilityModal = ({ isOpen, onClose, slotInfo }) => {
+  console.log("SLot: Start: ", slotInfo.start," End:", slotInfo.end);
+  const slotStart = new Date(slotInfo.start);
+  const slotEnd = new Date(slotInfo.end);
 
-  const handleSendEmail = (email) => {
-    console.log("Email", email);
-    window.open(`mailto:${email}`, "_blank");
-  };
-  // ---------------------------------------------------------------------
+//   -----------------------------------------------------
   return (
     <div
       id="default-modal"
@@ -24,9 +19,11 @@ export const EventDetailsModal = ({ isOpen, onClose, event }) => {
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           {/* <!-- Modal header --> */}
           <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              {title}
+            <h3 className="text-2xl  text-gray-900 dark:text-white">
+              Set your Availability
             </h3>
+
+            {/* Close button */}
             <button
               onClick={onClose}
               type="button"
@@ -52,43 +49,18 @@ export const EventDetailsModal = ({ isOpen, onClose, event }) => {
           </div>
           {/* <!-- Modal body --> */}
           <div className="p-4 md:p-5 space-y-4">
-          <div className="space-y-4">
-            <p>
-              <strong>Event Type:</strong> {eventType}
+            <p className="text-gray-500 dark:text-gray-400">
+              Set your availability for the selected slot
             </p>
-            <p>
-              <strong>Start:</strong> {new Date(start).toLocaleString()}
-            </p>
-            <p>
-              <strong>End:</strong> {new Date(end).toLocaleString()}
-            </p>
-            <p>
-              <strong>Duration:</strong> {duration} minutes
-            </p>
-            <p>
-              <strong>Attendees:</strong>{" "}
-            </p>
-            <ul>
-              {attendees.map((attendee, index) => (
-                <li key={index}>
-                  <div className="flex justify-space-between">
-                    <div>{attendee.name}</div>
-                    {/* TODO: Send email */}
-                    <button
-                    //  onClick={handleSendEmail(attendee.email)}
-                      className="text-white mx-5 px-2 rounded bg-gray-500"
-                    >
-                      Email
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
+            {slotStart} To {slotEnd}
+            {/* {slotInfo.slots.map((slot, index) => (
+              <p key={index} className="text-gray-500 dark:text-gray-400">
+                {slot[0]} 
+              </p>
+            ))} */}
           </div>
           {/* <!-- Modal footer --> */}
           <div className="flex justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-            
             <button
               onClick={onClose}
               data-modal-hide="default-modal"
