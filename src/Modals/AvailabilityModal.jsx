@@ -1,10 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 
 export const AvailabilityModal = ({ isOpen, onClose, slotInfo }) => {
   console.log("SLot: Start: ", slotInfo.start," End:", slotInfo.end);
   const slotStart = new Date(slotInfo.start);
+  const startDay = slotStart.getDay();
+  const startTime = slotStart.getTime();
   const slotEnd = new Date(slotInfo.end);
+
+  console.log("SLot: Start: ", slotStart.toISOString()," End:", slotEnd.toISOString());
+
+  const {user,isLoggedIn} = useSelector((state)=>state.auth);
+  console.log(user);
+  // add availability
+  // useEffect(()=>{
+  //   if(isLoggedIn){
+  //     console.log("Adding Availability");
+
+
+
+  //   }
+  // })
+
+  const [availability,setAvailability] = useState({
+    email:user.email,
+    start:"",
+    end:""
+  })
+  const handleAddAvailability = async()=>{
+      
+    try{
+      const response = await axios.post("http://localhost:4545/users/availability",availabilityData);
+    }
+    catch(error){ 
+      console.log("ERROR: ",error);
+    }
+  }
+  
 
 //   -----------------------------------------------------
   return (
@@ -52,7 +86,15 @@ export const AvailabilityModal = ({ isOpen, onClose, slotInfo }) => {
             <p className="text-gray-500 dark:text-gray-400">
               Set your availability for the selected slot
             </p>
-            {slotStart} To {slotEnd}
+
+            <ul>
+              <strong>Start: </strong>
+              <strong>End: </strong>
+
+              <strong>Set start and end time</strong>
+              <p>start: <span>date selector</span></p>
+            </ul>
+            {slotStart.toISOString()}  {slotEnd.toISOString()}
             {/* {slotInfo.slots.map((slot, index) => (
               <p key={index} className="text-gray-500 dark:text-gray-400">
                 {slot[0]} 

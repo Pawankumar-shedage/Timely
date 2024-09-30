@@ -7,7 +7,7 @@ export const Signup = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    role: "USER",
+    // role: "USER",
     password: "",
   });
 

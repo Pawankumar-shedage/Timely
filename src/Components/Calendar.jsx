@@ -18,6 +18,8 @@ export const CalendarSchedule = ({ height }) => {
   const [isModalOpen,setIsModalOpen] = useState(false);
   const [selectedSlot,setSelectedSlot] = useState(null);
   const [isAvailabilityModalOpen,setIsAvailabilityModalOpen] = useState(false);
+
+  
   //fetch events from backend
   useEffect(() => {
     console.log("Exexutes only once");

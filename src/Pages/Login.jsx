@@ -1,7 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { loginSuccess } from '../auth/Redux/authSliceRed';
 
 export const Login = () => {
   const [formData, setFormData] = useState({
@@ -20,6 +22,8 @@ export const Login = () => {
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log("Form Data: ", formData);
@@ -31,7 +35,11 @@ export const Login = () => {
       );
 
       if (response.status === 200) {
-        console.log("Response: ", response);
+        console.log("Response for user-login: ", response);
+
+        const user = response.data;
+        // save user in redux store
+        dispatch(loginSuccess(user));
 
         toast.success("Login successful!");
 
