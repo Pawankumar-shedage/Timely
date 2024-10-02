@@ -26,7 +26,7 @@ export const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form Data: ", formData);
+    // console.log("Form Data: ", formData); //Debug log
 
     try {
       const response = await axios.post(
