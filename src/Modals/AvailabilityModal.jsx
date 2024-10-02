@@ -171,6 +171,31 @@ export const AvailabilityModal = ({ isOpen, onClose, slotInfo }) => {
 
   const [submitDisabled, setSubmitDisabled] = useState(false);
 
+  // Slot
+  const getOrdinal = (day) => {
+    if (day > 3 && day < 21) return day + " th";
+    switch (day % 10) {
+      case 1:
+        return day + " st";
+      case 2:
+        return day + " nd";
+      case 3:
+        return day + " rd";
+      default:
+        return day + " th";
+    }
+  };
+
+  const formatFullDate = (date) => {
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+    return `${getOrdinal(day)} ${month}`;
+  };
+
+  const formattedSlotStartDate = formatFullDate(slotStart);
+  const formattedSlotEndDate = formatFullDate(slotEnd);
+
   //   -----------------------------------------------------
   return (
     <div
@@ -179,7 +204,7 @@ export const AvailabilityModal = ({ isOpen, onClose, slotInfo }) => {
       // aria-hidden="true"
       className=" w-full mx-auto  bg-gray-200 bg-opacity-20 backdrop-blur-sm overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center  md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
-      <div className="mt-40 mx-auto relative p-4 w-full max-w-2xl max-h-full">
+      <div className="mt-36 mx-auto relative p-4 w-full max-w-2xl max-h-full">
         {/* <!-- Modal content --> */}
         <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
           {/* <!-- Modal header --> */}
@@ -213,84 +238,120 @@ export const AvailabilityModal = ({ isOpen, onClose, slotInfo }) => {
           </div>
 
           {/* <!-- Modal body --> */}
-          <div className="p-4 md:p-5 space-y-4">
-            <p className="text-gray-500 dark:text-gray-400">
-              Set your availability for the selected slot
-            </p>
-
+          <div className="p-4 md:px-5  pt-2 pb-2 space-y-4">
             {/* Form for selecting start and end time */}
             <form
               onSubmit={handleAddAvailability}
-              className="mt-5 max-w-sm mx-auto border-2 border-gray-300 rounded-lg p-5"
+              className="mt-1  pb-3 mx-auto  rounded-lg"
             >
-              <div>
-                {/* 5th Sept 2024 */}
-                <span>
-                  From {slotStart.getDate()}-{slotStart.getMonth() + 1}-
-                  {slotStart.getFullYear()} to {slotEnd.getDate() - 1}-
-                  {slotEnd.getMonth() + 1}-{slotEnd.getFullYear()}
-                </span>
+
+              {/* Form header */}
+              <div className="mb-2 text-gray-500 dark:text-gray-400">
+                <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+                  Slot: &nbsp;
+                  {formattedSlotStartDate} to {formattedSlotEndDate}
+                </label>
               </div>
 
-              <div>
-                <strong>Set start and end time</strong>
-                <br />
+              {/* Start and End Time Input */}
+              <div className="mb-2">
+                <div className="mb-2">
+                  <span>Set start and end time</span>
+                </div>
+
                 {/* Start time */}
-                <p>
-                  start:
-                  <span>
-                    <input
-                      type="time"
-                      id="startTime"
-                      name="start"
-                      value={availabilityStartTime}
-                      onChange={handleTime}
-                    />
-                  </span>
-                </p>
+                <label
+                  for="time"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Start time:
+                </label>
+                <div className="relative mb-2 ">
+                  <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="time"
+                    id="time"
+                    name="start"
+                    value={availabilityStartTime}
+                    onChange={handleTime}
+                    className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
 
                 {/* End time */}
-                <p>
-                  end:
-                  <span>
-                    <input
-                      type="time"
-                      id="endTime"
-                      name="end"
-                      value={availabilityEndTime}
-                      onChange={handleTime}
-                    />
-                  </span>
-                </p>
+                <label
+                  for="time"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  End time:
+                </label>
+                <div className="relative ">
+                  <div className="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                    <svg
+                      className="w-4 h-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <input
+                    type="time"
+                    id="time"
+                    name="end"
+                    value={availabilityEndTime}
+                    onChange={handleTime}
+                    className="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={submitDisabled}
-                id="submitAvailability"
-                className={`${
-                  submitDisabled ? "cursor-not-allowed" : ""
-                } py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-gray-400 rounded-lg border border-gray-200 hover:bg-gray-300 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 `}
-              >
-                Submit
-              </button>
+              {/* Form Submit button */}
+              <div className="flex justify-center p-2 md:p-2 ">
+                <button
+                  type="submit"
+                  disabled={submitDisabled}
+                  id="submitAvailability"
+                  className={`${
+                    submitDisabled ? "cursor-not-allowed" : ""
+                  }py-2.5 px-5 ms-1 text-sm font-medium text-gray-900 focus:outline-none bg-gray-400 rounded-lg border border-gray-200 hover:bg-gray-300 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 `}
+                >
+                  Submit
+                </button>
+
+                {/* Close Btn */}
+                <button
+                  onClick={onClose}
+                  data-modal-hide="default-modal"
+                  type="button"
+                  className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-300 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                >
+                  Close
+                </button>
+              </div>
             </form>
-            {/* {slotInfo.slots.map((slot, index) => (
-              <p key={index} className="text-gray-500 dark:text-gray-400">
-                {slot[0]} 
-              </p>
-            ))} */}
-          </div>
-          {/* <!-- Modal footer --> */}
-          <div className="flex justify-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-            <button
-              onClick={onClose}
-              data-modal-hide="default-modal"
-              type="button"
-              className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-300 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-            >
-              Close
-            </button>
           </div>
         </div>
       </div>
